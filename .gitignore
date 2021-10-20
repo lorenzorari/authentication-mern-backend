@@ -142,6 +142,9 @@ dist
 .history
 .ionide
 
+# REST Cloent extension
+*.rest
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
