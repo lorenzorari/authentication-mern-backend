@@ -8,6 +8,7 @@ const app = express();
 
 app.use(express.json());
 
+const auth = require("./middleware/auth");
 const User = require("./model/user");
 
 app.post("/api/register", async (req, res) => {
@@ -71,6 +72,10 @@ app.post("/api/login", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+app.post("/api/welcome", auth, (req, res) => {
+  res.status(200).send(`Welcome! ${req.user}`);
 });
 
 module.exports = app;
