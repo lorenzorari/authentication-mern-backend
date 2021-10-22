@@ -66,4 +66,12 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const getMe = async (req, res) => {
+  const { user_id } = req.user;
+
+  const user = await User.findOne({ _id: user_id });
+
+  res.status(200).send(`Welcome! ${user.firstName}`);
+};
+
+module.exports = { register, login, getMe };
