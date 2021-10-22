@@ -7,8 +7,8 @@ const register = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
-    if (!(firstName && lastName && email && password))
-      return res.status(400).send("All input are required");
+    if (!(email && password))
+      return res.status(400).send("Email and password are required");
 
     const oldUser = await User.findOne({ email });
 
