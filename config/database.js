@@ -16,3 +16,13 @@ exports.connect = () => {
       process.exit(1);
     });
 };
+
+exports.disconnect = () => {
+  mongoose
+    .disconnect()
+    .then(() => console.log("Succesfully disconnected"))
+    .catch((err) => {
+      console.log("Disconnection failed");
+      console.error(err);
+    });
+};
