@@ -3,9 +3,17 @@ const setup = require("../helper/setup");
 const app = require("../../app");
 const { expect } = require("chai");
 const bcrypt = require("bcryptjs");
+const User = require("../../model/user");
 
 describe("/register => create user", () => {
   setup();
+
+  beforeEach((done) => {
+    const email = "test@test.com";
+    User.deleteOne({ email })
+      .then(() => done())
+      .catch((err) => done(err));
+  });
 
   it("should create a user with encrypted password", (done) => {
     const user = {
