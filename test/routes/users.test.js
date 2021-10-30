@@ -6,10 +6,12 @@ const bcrypt = require("bcryptjs");
 const User = require("../../model/user");
 
 describe("/register => create user", () => {
+  const endpoint = "/api/users/register";
+  const email = "test@test.com";
+
   setup();
 
   beforeEach((done) => {
-    const email = "test@test.com";
     User.deleteOne({ email })
       .then(() => done())
       .catch((err) => done(err));
@@ -19,12 +21,12 @@ describe("/register => create user", () => {
     const user = {
       firstName: "test",
       lastName: "test",
-      email: "test@test.com",
+      email,
       password: "test",
     };
 
     request(app)
-      .post("/api/users/register")
+      .post(endpoint)
       .send(user)
       .then(async (res) => {
         const isPasswordCorrect = await bcrypt.compare(
@@ -35,6 +37,25 @@ describe("/register => create user", () => {
         expect("Content-Type", "/json/");
         expect(isPasswordCorrect).to.be.true;
         expect(res.statusCode).to.equal(201);
+        done();
+      })
+      .catch((err) => done(err));
+  });
+
+  it("shouldn't create a user without an email", (done) => {
+    const user = {
+      firstName: "test",
+      lastName: "test",
+      password: "test",
+    };
+
+    request
+      .agent(app)
+      .post(endpoint)
+      .send(user)
+      .then((res) => {
+        expect(res.statusCode).to.equal(400);
+        expect(res.error.text).to.equal("Email and password are required");
         done();
       })
       .catch((err) => done(err));
