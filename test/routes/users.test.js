@@ -49,8 +49,7 @@ describe("/register => create user", () => {
       password: "test",
     };
 
-    request
-      .agent(app)
+    request(app)
       .post(endpoint)
       .send(user)
       .then((res) => {
@@ -68,8 +67,7 @@ describe("/register => create user", () => {
       email,
     };
 
-    request
-      .agent(app)
+    request(app)
       .post(endpoint)
       .send(user)
       .then((res) => {
@@ -86,8 +84,7 @@ describe("/register => create user", () => {
       password: "test",
     };
 
-    request
-      .agent(app)
+    request(app)
       .post(endpoint)
       .send(user)
       .then((res) => {
