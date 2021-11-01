@@ -79,4 +79,21 @@ describe("/register => create user", () => {
       })
       .catch((err) => done(err));
   });
+
+  it("should create a user without firstname and lastname", (done) => {
+    const user = {
+      email,
+      password: "test",
+    };
+
+    request
+      .agent(app)
+      .post(endpoint)
+      .send(user)
+      .then((res) => {
+        expect(res.statusCode).to.equal(201);
+        done();
+      })
+      .catch((err) => done(err));
+  });
 });
