@@ -60,4 +60,23 @@ describe("/register => create user", () => {
       })
       .catch((err) => done(err));
   });
+
+  it("shouldn't create a user without a password", (done) => {
+    const user = {
+      firstName: "test",
+      lastName: "test",
+      email,
+    };
+
+    request
+      .agent(app)
+      .post(endpoint)
+      .send(user)
+      .then((res) => {
+        expect(res.statusCode).to.equal(400);
+        expect(res.error.text).to.equal("Email and password are required");
+        done();
+      })
+      .catch((err) => done(err));
+  });
 });
